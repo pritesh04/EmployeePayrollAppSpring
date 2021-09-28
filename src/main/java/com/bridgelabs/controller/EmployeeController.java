@@ -52,7 +52,7 @@ public class EmployeeController {
      public ResponseEntity<ResponseDto> getEmployeePayrollData(@PathVariable("empId") int empId)
      {
     	 EmployeePayrollData emp=null;
-    	 emp=new EmployeePayrollData(1,new EmployeePayrollDto("Ajay",70000));
+    	 emp=new EmployeePayrollData(1,new EmployeePayrollDto("Pritesh",2000));
     	 ResponseDto respDTO=new ResponseDto("Get call successful",emp);
     	 return new ResponseEntity<ResponseDto>(respDTO,HttpStatus.OK);
      }
