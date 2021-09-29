@@ -22,26 +22,15 @@ import com.bridgelabs.service.IEmployeePayrollService;
 @RestController
 public class EmployeeController {
 	
-	@GetMapping("/get")
-	public String hello()
-	{
-		return "HEllo";
-	}
-	@PostMapping("/post")
-	public String helloPost()
-	{
-		return "HEllo";
-	}
-	@PutMapping("/put")
-	public String helloPut()
-	{
-		return "HEllo";
-	}
-	@DeleteMapping("/delete")
-	public String helloDelete()
-	{
-		return "HEllo";
-	}
+	/*
+	 * @GetMapping("/get") public String hello() { return "HEllo"; }
+	 * 
+	 * @PostMapping("/post") public String helloPost() { return "HEllo"; }
+	 * 
+	 * @PutMapping("/put") public String helloPut() { return "HEllo"; }
+	 * 
+	 * @DeleteMapping("/delete") public String helloDelete() { return "HEllo"; }
+	 */
 	
 	 @Autowired
 	 IEmployeePayrollService service;
@@ -78,7 +67,7 @@ public class EmployeeController {
      public ResponseEntity<ResponseDto> updateEmployeePayrollData(@RequestBody EmployeePayrollDto empPayrollDto)
      {
     	 EmployeePayrollData emp=null;
-    	 emp=service.updateEmployeePayrollData(empPayrollDto);
+    	 emp=service.updateEmployeePayrollData(1,empPayrollDto);
     	 ResponseDto respDTO=new ResponseDto("Updated employee payroll data successfully",emp);
     	 return new ResponseEntity<ResponseDto>(respDTO,HttpStatus.OK);
      }
