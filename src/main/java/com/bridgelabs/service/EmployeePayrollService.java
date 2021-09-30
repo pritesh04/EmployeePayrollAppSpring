@@ -10,30 +10,30 @@ import com.bridgelabs.model.EmployeePayrollData;
 @Service
 public class EmployeePayrollService implements IEmployeePayrollService {
 
-	private List<EmployeePayrollData> empList=new ArrayList<>();
+	private List<EmployeePayrollData> list=new ArrayList<>();
 	
 	
 	@Override
 	public List<EmployeePayrollData> getEmployeePayrollData() {
-		return empList;
+		return list;
 	}
 
 	@Override
 	public EmployeePayrollData getEmployeePayrollData(int empId) {
-		return empList.get(empId-1);
+		return list.get(empId-1);
 	}
 
 	@Override
 	public EmployeePayrollData addEmployeePayrollData(EmployeePayrollDto emp) {
 		EmployeePayrollData data;
-		data=new EmployeePayrollData(empList.size()+1,emp);
-		empList.add(data);
+		data=new EmployeePayrollData(list.size()+1,emp);
+		list.add(data);
 		return data;
 	}
 
 	@Override
 	public void deleteEmployeePayroll(int empId) {
-		empList.remove(empId-1);
+		list.remove(empId-1);
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 		EmployeePayrollData data=this.getEmployeePayrollData(empId);
 		data.setName(emp.getName());
 		data.setSalary(emp.getSalary());
-		empList.set(empId-1, data);
+		list.set(empId-1, data);
 		return data;
 	}
 
