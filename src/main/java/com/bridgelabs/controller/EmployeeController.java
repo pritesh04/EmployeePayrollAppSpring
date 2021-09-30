@@ -2,6 +2,8 @@ package com.bridgelabs.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,8 @@ import com.bridgelabs.dto.EmployeePayrollDto;
 import com.bridgelabs.model.EmployeePayrollData;
 import com.bridgelabs.model.ResponseDto;
 import com.bridgelabs.service.IEmployeePayrollService;
+
+import lombok.val;
 
 @RestController
 public class EmployeeController {
@@ -55,7 +59,7 @@ public class EmployeeController {
      }
      
      @PostMapping("/create")
-     public ResponseEntity<ResponseDto> addEmployeePayrollData(@RequestBody EmployeePayrollDto empPayrollDto)
+     public ResponseEntity<ResponseDto> addEmployeePayrollData(@Valid @RequestBody EmployeePayrollDto empPayrollDto)
      {
     	 EmployeePayrollData emp=null;
     	 emp=service.addEmployeePayrollData(empPayrollDto);
@@ -64,7 +68,7 @@ public class EmployeeController {
      }
      
      @PutMapping("/update")
-     public ResponseEntity<ResponseDto> updateEmployeePayrollData(@RequestBody EmployeePayrollDto empPayrollDto)
+     public ResponseEntity<ResponseDto> updateEmployeePayrollData(@Valid @RequestBody EmployeePayrollDto empPayrollDto)
      {
     	 EmployeePayrollData emp=null;
     	 emp=service.updateEmployeePayrollData(1,empPayrollDto);
