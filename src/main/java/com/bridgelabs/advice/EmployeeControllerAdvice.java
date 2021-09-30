@@ -25,7 +25,11 @@ public class EmployeeControllerAdvice {
 
 	}
 	
-	
+	@ExceptionHandler(IndexOutOfBoundsException.class)
+	public ResponseEntity<String> noSuchId(IndexOutOfBoundsException ex)
+	{
+		return new ResponseEntity<String>("No id Present " , HttpStatus.NOT_FOUND);
+	}
 
 	@ExceptionHandler(NoSuchElementException.class)
 	public ResponseEntity<String> noIdPresent(NoSuchElementException exception) {
