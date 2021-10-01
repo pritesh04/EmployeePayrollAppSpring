@@ -3,14 +3,18 @@ package com.bridgelabs.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bridgelabs.advice.EmployeePayrollException;
 import com.bridgelabs.dto.EmployeePayrollDto;
 import com.bridgelabs.model.EmployeePayrollData;
+import com.bridgelabs.repository.EmployeeRepository;
 @Service
 public class EmployeePayrollService implements IEmployeePayrollService {
-
+	
+	EmployeeRepository employeeRepository;
+	
 	private List<EmployeePayrollData> list=new ArrayList<>();
 	
 	
@@ -48,4 +52,5 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 	}
 
 	
+
 }
