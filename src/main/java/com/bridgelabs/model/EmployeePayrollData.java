@@ -1,44 +1,32 @@
 package com.bridgelabs.model;
 
+import java.util.List;
+
 import com.bridgelabs.dto.EmployeePayrollDto;
 
-public class EmployeePayrollData {
+import lombok.NoArgsConstructor;
 
+public @NoArgsConstructor class EmployeePayrollData {
 	private int empId;
 	private String name;
 	private long salary;
+	private String gender;
+	private String startDate;
+	private String note;
+	private String profilePic;
+	private List<String> deparment;
+	
 
-	public EmployeePayrollData() {
-	}
-
-	public EmployeePayrollData(int empId, EmployeePayrollDto empDto) {
+	public EmployeePayrollData(int empId, EmployeePayrollDto empPayrollDTO) {
 		super();
 		this.empId = empId;
-		this.name = empDto.name;
-		this.salary = empDto.salary;
+		this.name = empPayrollDTO.name;
+		this.salary = empPayrollDTO.salary;
+		this.gender = empPayrollDTO.gender;
+		this.startDate = empPayrollDTO.startDate;
+		this.note = empPayrollDTO.note;
+		this.profilePic = empPayrollDTO.profilePic;
+		this.deparment = empPayrollDTO.department;
 	}
 
-	public int getEmpId() {
-		return empId;
-	}
-
-	public void setEmpId(int empId) {
-		this.empId = empId;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public long getSalary() {
-		return salary;
-	}
-
-	public void setSalary(long salary) {
-		this.salary = salary;
-	}
 }
