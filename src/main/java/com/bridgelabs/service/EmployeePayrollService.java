@@ -22,13 +22,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class EmployeePayrollService implements IEmployeePayrollService {
 	@Autowired
-	EmployeeRepository employeeRepository;
+	  EmployeeRepository employeeRepository;
 
 	private List<EmployeePayrollData> list = new ArrayList<>();
 
 	@Override
 	public List<EmployeePayrollData> getEmployeePayrollData() {
-		return list;
+		return employeeRepository.findAll();
 	}
 
 	@Override
