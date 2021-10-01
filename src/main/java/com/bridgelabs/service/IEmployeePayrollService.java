@@ -7,13 +7,13 @@ import com.bridgelabs.model.EmployeePayrollData;
 
 public interface IEmployeePayrollService {
 
-List<EmployeePayrollData> getEmployeePayrollData();
-	
+	List<EmployeePayrollData> getEmployeePayrollData();
+
 	EmployeePayrollData getEmployeePayrollData(int id);
-	
+
 	EmployeePayrollData addEmployeePayrollData(EmployeePayrollDto emp);
-	
+
 	void deleteEmployeePayroll(int id);
-	
-	EmployeePayrollData updateEmployeePayrollData(int empId,EmployeePayrollDto emp);
+
+	EmployeePayrollData updateEmployeePayrollData(int empId, EmployeePayrollDto emp);
 }
