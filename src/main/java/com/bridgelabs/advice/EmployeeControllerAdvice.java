@@ -1,43 +1,52 @@
 package com.bridgelabs.advice;
 
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.bridgelabs.model.ResponseDto;
+
+import lombok.extern.slf4j.Slf4j;
+
 @ControllerAdvice
+@Slf4j
 public class EmployeeControllerAdvice {
-
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<String> notAllowed(MethodArgumentNotValidException ex) {
-		return new ResponseEntity<String>("Please enter valid Name", HttpStatus.BAD_REQUEST);
-	}
-
-	@ExceptionHandler
-	public ResponseEntity<String> notEmpty(HttpMessageNotReadableException exception) {
-		return new ResponseEntity<String>("Message cant be Empty", HttpStatus.NOT_FOUND);
-
+	
+	private static final String message="Exception while processing REST request";
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	public ResponseEntity<ResponseDto> handleHttpMessageNotReadableException(HttpMessageNotReadableException exception)
+	{
+		log.error("Ïnvalid Date format",exception);
+		ResponseDto res=new ResponseDto(message,"Should have date in dd MM yyyy");
+		return new ResponseEntity<ResponseDto>(res,HttpStatus.BAD_REQUEST);
+		
 	}
 	
-	@ExceptionHandler(IndexOutOfBoundsException.class)
-	public ResponseEntity<String> noSuchId(IndexOutOfBoundsException ex)
+	@ExceptionHandler(EmployeePayrollException.class)
+	public ResponseEntity<ResponseDto> HandleMethodArgumentNotValidException(EmployeePayrollException exception)
 	{
-		return new ResponseEntity<String>("No id Present " , HttpStatus.NOT_FOUND);
+		ResponseDto res=new ResponseDto("Exception while processing REST request",exception.getMessage());
+		return new ResponseEntity<ResponseDto>(res,HttpStatus.BAD_REQUEST);
+		
 	}
-
-	@ExceptionHandler(NoSuchElementException.class)
-	public ResponseEntity<String> noIdPresent(NoSuchElementException exception) {
-		return new ResponseEntity<String>("No id present", HttpStatus.BAD_REQUEST);
-	}
-
-	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-	public ResponseEntity<String> badReq(HttpRequestMethodNotSupportedException exception) {
-		return new ResponseEntity<String>("Change HttpRequest", HttpStatus.BAD_REQUEST);
+	
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<ResponseDto> HandleMethodArgumentNotValidException(MethodArgumentNotValidException exception)
+	{
+		List<ObjectError> errorList=exception.getBindingResult().getAllErrors();
+		List<String> errMsg=errorList.stream().map(objErr->objErr.getDefaultMessage()).collect(Collectors.toList());
+		ResponseDto res=new ResponseDto("Exception while processing REST request",errMsg);
+		return new ResponseEntity<ResponseDto>(res,HttpStatus.BAD_REQUEST);
+		
 	}
 }
