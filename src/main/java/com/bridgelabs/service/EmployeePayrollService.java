@@ -10,14 +10,17 @@ import com.bridgelabs.advice.EmployeePayrollException;
 import com.bridgelabs.dto.EmployeePayrollDto;
 import com.bridgelabs.model.EmployeePayrollData;
 import com.bridgelabs.repository.EmployeeRepository;
+
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class EmployeePayrollService implements IEmployeePayrollService {
-	
+	@Autowired
 	EmployeeRepository employeeRepository;
-	
-	private List<EmployeePayrollData> list=new ArrayList<>();
-	
-	
+
+	private List<EmployeePayrollData> list = new ArrayList<>();
+
 	@Override
 	public List<EmployeePayrollData> getEmployeePayrollData() {
 		return list;
@@ -25,32 +28,28 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 
 	@Override
 	public EmployeePayrollData getEmployeePayrollData(int empId) {
-		return list.stream().filter(empData->empData.getEmpId()==empId).findFirst().orElseThrow(()->new EmployeePayrollException("Employee not found"));
-		//return list.get(empId-1);
+		return employeeRepository.findById(empId).orElseThrow(
+				() -> new EmployeePayrollException("Employee with employeeId " + empId + " does not exists..."));
 	}
 
 	@Override
 	public EmployeePayrollData addEmployeePayrollData(EmployeePayrollDto emp) {
-		EmployeePayrollData data;
-		data=new EmployeePayrollData(list.size()+1,emp);
-		list.add(data);
-		return data;
+		EmployeePayrollData data = new EmployeePayrollData(emp);
+		log.debug("Emp Data :" + data.toString());
+		return employeeRepository.save(data);
 	}
 
 	@Override
 	public void deleteEmployeePayroll(int empId) {
-		list.remove(empId-1);
+		EmployeePayrollData empData = this.getEmployeePayrollData(empId);
+		employeeRepository.delete(empData);
 	}
 
 	@Override
 	public EmployeePayrollData updateEmployeePayrollData(int empId, EmployeePayrollDto emp) {
-		EmployeePayrollData data=this.getEmployeePayrollData(empId);
-		data.setName(emp.getName());
-		data.setSalary(emp.getSalary());
-		list.set(empId-1, data);
-		return data;
+		EmployeePayrollData data = this.getEmployeePayrollData(empId);
+		data.updateEmployeePayrollData(emp);
+		return employeeRepository.save(data);
 	}
-
-	
 
 }
